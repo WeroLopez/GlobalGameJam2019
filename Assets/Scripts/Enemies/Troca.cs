@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 #pragma warning disable 0649
-public class Carro : MonoBehaviour
+public class Troca : MonoBehaviour
 {
-    // Carro
+    // Troca
 
     Rigidbody2D carRigidBody;
     [SerializeField]
     Rigidbody2D prefabBala;
     [SerializeField]
+    bool disparaArriba;
+    [SerializeField]
     float moveSpeed;
-    [SerializeField]
-    bool derechaAIzquierda;
-    [SerializeField]
-    bool puedeDisparar;
     bool disparando = false;
 
     // Start is called before the first frame update
@@ -23,33 +21,22 @@ public class Carro : MonoBehaviour
     {
         carRigidBody = GetComponent<Rigidbody2D>();
         
-        // El carro se mueve a la izquierda
-        if (derechaAIzquierda)
-        {
-            carRigidBody.velocity = new Vector2(-moveSpeed, 0);
-        } 
-        // El carro se mueve a la derecha
-        else
-        {
-            carRigidBody.velocity = new Vector2(moveSpeed, 0);
-        }
+        // La troca se mueve a la izquierda
+        carRigidBody.velocity = new Vector2(-moveSpeed, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (puedeDisparar)
+        if (!disparando)
         {
-            if (!disparando)
+            if (disparaArriba)
             {
-                if (derechaAIzquierda)
-                {
-                    StartCoroutine("DispararAbajo");
-                }
-                else
-                {
-                    StartCoroutine("DispararArriba");
-                }
+                StartCoroutine("DispararArriba");
+            }
+            else
+            {
+                StartCoroutine("DispararAbajo");
             }
         }
     }
@@ -60,7 +47,7 @@ public class Carro : MonoBehaviour
         Rigidbody2D test;
         test = (Instantiate(prefabBala, transform.position+1.0f*transform.forward,transform.rotation));
         test.AddRelativeForce(new Vector2(0, -400));
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         disparando = false;
     }
 
@@ -70,16 +57,16 @@ public class Carro : MonoBehaviour
         Rigidbody2D test;
         test = (Instantiate(prefabBala, transform.position+1.0f*transform.forward,transform.rotation));
         test.AddRelativeForce(new Vector2(0, 400));
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         disparando = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // El carro choca con el jugador
+        // La troca choca con el jugador
         if (other.name.StartsWith("Player"))
         {
-            print("COLISION");
+            print("COLISION CON TROCA");
         }
     }
 }
