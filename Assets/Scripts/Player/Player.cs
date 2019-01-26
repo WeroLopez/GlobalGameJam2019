@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CoreGame.SystemControls;
+using UnityEngine.UI;
+
+#pragma warning disable 0649
 
 public class Player : MonoBehaviour
 {
@@ -21,7 +24,15 @@ public class Player : MonoBehaviour
     float jumpSpeed, jumpAmplitude;
     float jumpTime;
     float jumpInitialY;
-    
+
+    //StressBar
+    float stressValue;
+    [SerializeField]
+    float maxStressValue;
+    [SerializeField]
+    GameObject stressBar;
+    Image stressBarValue;
+
     //Camara
     Camera camara;
     float camY;
@@ -34,6 +45,10 @@ public class Player : MonoBehaviour
     {
         playerRigidBody = GetComponent<Rigidbody2D>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        //estres
+        stressBarValue = stressBar.transform.GetChild(1).GetComponent<Image>();
+        stressValue = 0;
+        RefreshStress(0f);
         //Camara
         camara = Camera.main;
         camY = camara.transform.position.y;
@@ -69,8 +84,8 @@ public class Player : MonoBehaviour
         }
         if (Controllers.GetFire(2, 2))
         {
-            print("Ataque");
             playerSpriteRenderer.color = Color.white;
+            RefreshStress(2f);
         }
     }
 
@@ -81,7 +96,6 @@ public class Player : MonoBehaviour
         {
             if (Controllers.GetFire(1, 2))
             {
-                print("Saltar");
                 isJumping = true;
                 footCollider.enabled = false;
                 jumpTime = 0;
@@ -116,7 +130,6 @@ public class Player : MonoBehaviour
         }
         if (Controllers.GetFire(3, 2))
         {
-            print("Agachar");
             playerSpriteRenderer.color = Color.white;
         }
     }
@@ -190,6 +203,24 @@ public class Player : MonoBehaviour
             footCollider.enabled = true;
             transform.position = new Vector3(transform.position.x, jumpInitialY, transform.position.z);
             playerSpriteRenderer.color = Color.white;
+        }
+    }
+
+    public void RefreshStress(float stressChange)
+    {
+        stressValue += stressChange;
+        
+        if (stressValue >= maxStressValue)
+        {
+            print("Perdiste");
+            /*deathSound.PlaySound(transform.position, audioDeath);
+            deathSound.PlaySound(transform.position, audioExplosion);
+            objectPooler.GetObjectFromPool("EnemyExplosion", transform.position, transform.rotation, null);
+            gameObject.SetActive(false);*/
+        }
+        else
+        {
+            stressBarValue.fillAmount = stressValue / maxStressValue;
         }
     }
 
