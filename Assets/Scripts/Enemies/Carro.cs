@@ -9,6 +9,8 @@ public class Carro : MonoBehaviour
 
     Rigidbody2D carRigidBody;
     [SerializeField]
+    Rigidbody2D prefabBala;
+    [SerializeField]
     float moveSpeed;
     [SerializeField]
     bool derechaAIzquierda;
@@ -28,6 +30,9 @@ public class Carro : MonoBehaviour
         else {
             carRigidBody.velocity = new Vector2(moveSpeed, 0);
         }
+        
+        Rigidbody2D test;
+        test = (Instantiate(prefabBala));
     }
 
     // Update is called once per frame
