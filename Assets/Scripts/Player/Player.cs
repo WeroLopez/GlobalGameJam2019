@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     Rigidbody2D playerRigidBody;
     SpriteRenderer playerSpriteRenderer;
     Vector2 leftJoystick;
-
     [SerializeField]
     float moveSpeed;
     
@@ -17,7 +16,8 @@ public class Player : MonoBehaviour
     Camera camara;
     float camY;
     bool tocandoLimite;
-    bool tocandoCamara;
+    [SerializeField]
+    Transform triggerCamara;
 
     // Start is called before the first frame update
     void Start()
@@ -33,48 +33,52 @@ public class Player : MonoBehaviour
     {
         leftJoystick = Controllers.GetJoystick(1, 1);
 
+        //No moverse hacia atras cuando toca el limite
         if (tocandoLimite && leftJoystick.x < 0)
         {
             playerRigidBody.velocity = new Vector2(0, leftJoystick.y) * moveSpeed;
         }
+        //Moverse hacia enfrente si toca el limite
         else if (tocandoLimite && leftJoystick.x > 0)
         {
             tocandoLimite = false;
             playerRigidBody.velocity = new Vector2(leftJoystick.x, leftJoystick.y) * moveSpeed;
         }
+        //Moverse
         else
         {
             playerRigidBody.velocity = new Vector2(leftJoystick.x, leftJoystick.y) * moveSpeed;
         }
         
-        //Flipear el sprite
         if (leftJoystick.x > 0)
         {
+            //Flipear el sprite
             playerSpriteRenderer.flipX = false;
+            //mover la camara hacia enfrente
+            if (transform.position.x > triggerCamara.transform.position.x)
+            {
+                camara.transform.parent = transform;
+                camara.transform.position = new Vector3(
+                    camara.transform.position.x,camY, camara.transform.position.z);
+            }
         }
         else if (leftJoystick.x < 0)
         {
+            //Flipear el sprite
             playerSpriteRenderer.flipX = true;
+            //dejar de mover la camara
+            camara.transform.parent = null;
         }
-
-
-        if (tocandoCamara && leftJoystick.x < 0)
+        else if (leftJoystick.x == 0)
         {
-            tocandoCamara = false;
-        }
-        else if(tocandoCamara && leftJoystick.x > 0)
-        {
-            camara.transform.position = new Vector2(camara.transform.position.x, camY);
+            //dejar de mover la camara
+            camara.transform.parent = null;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.name == "CamaraEnfrente")
-        {
-            tocandoCamara = true;
-        }
-        else if(other.name == "Limite")
+        if(other.name == "Limite")
         {
             tocandoLimite = true;
         }
