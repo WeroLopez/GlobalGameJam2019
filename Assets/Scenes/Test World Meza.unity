@@ -181,12 +181,12 @@ PrefabInstance:
     - target: {fileID: 224820340142400410, guid: 19a46a48fdb0dae489b7719d6fefe064,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -9
+      value: 278.45
       objectReference: {fileID: 0}
     - target: {fileID: 224820340142400410, guid: 19a46a48fdb0dae489b7719d6fefe064,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -253
+      value: -181.9
       objectReference: {fileID: 0}
     - target: {fileID: 224820340142400410, guid: 19a46a48fdb0dae489b7719d6fefe064,
         type: 3}
@@ -651,8 +651,8 @@ MonoBehaviour:
   prefabBala: {fileID: 4664782246966895234, guid: 84d5a525a72c46041ba4fc6bfda50e6b,
     type: 3}
   moveSpeed: 8.5
-  derechaAIzquierda: 0
-  puedeDisparar: 0
+  derechaAIzquierda: 1
+  puedeDisparar: 1
 --- !u!50 &1264947380
 Rigidbody2D:
   serializedVersion: 4
