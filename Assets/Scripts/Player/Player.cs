@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     Rigidbody2D playerRigidBody;
     SpriteRenderer playerSpriteRenderer;
     BoxCollider2D footCollider;
+    Animator playerAnimator;
 
     //Move
     Vector2 leftJoystick;
@@ -50,6 +51,7 @@ public class Player : MonoBehaviour
     {
         playerRigidBody = GetComponent<Rigidbody2D>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        playerAnimator = GetComponent<Animator>();
         //estres
         stressBarValue = stressBar.transform.GetChild(1).GetComponent<Image>();
         stressValue = 0;
@@ -85,7 +87,6 @@ public class Player : MonoBehaviour
         else if (other.name.StartsWith("Basura"))
         {
             tocandoBasura = true;
-            print("tocando basura");
         }
     }
 
@@ -146,7 +147,6 @@ public class Player : MonoBehaviour
             if (tocandoBasura)
             {
                 cubierto = true;
-                print("cubierto");
             }
         }
         if (Controllers.GetFire(3, 2))
@@ -154,7 +154,6 @@ public class Player : MonoBehaviour
             playerSpriteRenderer.color = Color.white;
             isDucking = false;
             cubierto = false;
-            print("ya nel");
         }
     }
 
@@ -164,6 +163,7 @@ public class Player : MonoBehaviour
         if (!isJumping && !isDucking)
         {
             leftJoystick = Controllers.GetJoystick(1, 1);
+            playerAnimator.SetFloat("Velocity", Mathf.Abs(leftJoystick.x) + Mathf.Abs(leftJoystick.y));
             
             //No moverse hacia atras cuando toca el limite
             if (tocandoLimite && leftJoystick.x < 0)
