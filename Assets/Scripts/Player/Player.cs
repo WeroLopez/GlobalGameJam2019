@@ -25,6 +25,11 @@ public class Player : MonoBehaviour
     float jumpTime;
     float jumpInitialY;
 
+    //Agachar
+    bool isDucking;
+    bool tocandoBasura;
+    bool cubierto;
+
     //StressBar
     float stressValue;
     [SerializeField]
@@ -56,6 +61,10 @@ public class Player : MonoBehaviour
         isJumping = false;
         footCollider = GetComponent<BoxCollider2D>();
         jumpTime = 0;
+        //Agachar
+        isDucking = false;
+        cubierto = false;
+        tocandoBasura = false;
     }
 
     // Update is called once per frame
@@ -72,6 +81,19 @@ public class Player : MonoBehaviour
         if(other.name == "Limite")
         {
             tocandoLimite = true;
+        }
+        else if (other.name.StartsWith("Basura"))
+        {
+            tocandoBasura = true;
+            print("tocando basura");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.name.StartsWith("Basura"))
+        {
+            tocandoBasura = false;
         }
     }
 
@@ -111,13 +133,6 @@ public class Player : MonoBehaviour
                 transform.position.x, 
                 transform.position.y + Mathf.Sin(jumpSpeed * jumpTime) * jumpAmplitude, 
                 transform.position.z);
-            /*if(transform.position.y <= jumpInitialY)
-            {
-                isJumping = false;
-                footCollider.enabled = true;
-                transform.position = new Vector3(transform.position.x, jumpInitialY, transform.position.z);
-                playerSpriteRenderer.color = Color.white;
-            }*/
         }
     }
 
@@ -127,17 +142,26 @@ public class Player : MonoBehaviour
         if (Controllers.GetFire(3, 1))
         {
             playerSpriteRenderer.color = Color.blue;
+            isDucking = true;
+            if (tocandoBasura)
+            {
+                cubierto = true;
+                print("cubierto");
+            }
         }
         if (Controllers.GetFire(3, 2))
         {
             playerSpriteRenderer.color = Color.white;
+            isDucking = false;
+            cubierto = false;
+            print("ya nel");
         }
     }
 
     private void Move()
     {
         //Si no esta saltando, moverse
-        if (!isJumping)
+        if (!isJumping && !isDucking)
         {
             leftJoystick = Controllers.GetJoystick(1, 1);
             
@@ -181,6 +205,8 @@ public class Player : MonoBehaviour
                 //dejar de mover la camara
                 camara.transform.parent = null;
             }
+            //Mover la z
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
         }
         //Si esta saltando, no moverse
         else
@@ -213,10 +239,6 @@ public class Player : MonoBehaviour
         if (stressValue >= maxStressValue)
         {
             print("Perdiste");
-            /*deathSound.PlaySound(transform.position, audioDeath);
-            deathSound.PlaySound(transform.position, audioExplosion);
-            objectPooler.GetObjectFromPool("EnemyExplosion", transform.position, transform.rotation, null);
-            gameObject.SetActive(false);*/
         }
         else
         {
