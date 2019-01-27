@@ -195,7 +195,6 @@ public class Player : MonoBehaviour
         {
             playerAnimator.SetTrigger("Punch");
             isAttacking = true;
-            playerSpriteRenderer.color = Color.red;
             if (isDucking)
             {
                 transform.GetChild(1).gameObject.SetActive(true);
@@ -208,7 +207,6 @@ public class Player : MonoBehaviour
         if (Controllers.GetFire(2, 2))
         {
             isAttacking = false;
-            playerSpriteRenderer.color = Color.white;
             transform.GetChild(0).gameObject.SetActive(false);
             transform.GetChild(1).gameObject.SetActive(false);
         }
@@ -226,7 +224,6 @@ public class Player : MonoBehaviour
                 footCollider.enabled = false;
                 jumpTime = 0;
                 jumpInitialY = transform.position.y;
-                playerSpriteRenderer.color = Color.cyan;
                 StartCoroutine(Jumping());
             }
         }
@@ -248,7 +245,6 @@ public class Player : MonoBehaviour
             if (!immovilized)
             {
                 playerAnimator.SetBool("Duck", true);
-                playerSpriteRenderer.color = Color.blue;
                 isDucking = true;
                 if (tocandoBasura)
                 {
@@ -261,7 +257,6 @@ public class Player : MonoBehaviour
             if (!immovilized)
             {
                 playerAnimator.SetBool("Duck", false);
-                playerSpriteRenderer.color = Color.white;
                 isDucking = false;
                 cubierto = false;
             }
