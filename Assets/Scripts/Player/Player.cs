@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CoreGame.SystemControls;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 #pragma warning disable 0649
 
@@ -180,6 +181,10 @@ public class Player : MonoBehaviour
             StartCoroutine(StuckOnGum());
             Destroy(other.gameObject);
             print("ATORADO EN EL CHICLE");
+        }
+        else if (other.name == "Final")
+        {
+            SceneManager.LoadScene("Final", LoadSceneMode.Additive);
         }
     }
 
