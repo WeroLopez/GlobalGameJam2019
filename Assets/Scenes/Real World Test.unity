@@ -1145,6 +1145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c6fc9272e88a14f8126502b803b07d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spritePerro: {fileID: 21300000, guid: 099bb97b2a066084b9df1e6ebd017f04, type: 3}
   moveSpeed: 5
   isJumping: 0
   jumpSpeed: 15

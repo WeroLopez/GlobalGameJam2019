@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
 
     bool muerto;
 
+    [SerializeField]
+    Sprite spritePerro;
+
     //Move
     Vector2 leftJoystick;
     [SerializeField]
@@ -156,6 +159,7 @@ public class Player : MonoBehaviour
             {
                 StartCoroutine(AfraidOfDog());
                 other.GetComponent<Collider2D>().enabled = false;
+                other.GetComponent<SpriteRenderer>().sprite = spritePerro;
                 print("PERRO");
             }
             else
