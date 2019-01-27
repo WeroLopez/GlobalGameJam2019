@@ -31,6 +31,7 @@ namespace CoreGame
                 if (other.name.StartsWith("Instanciador"))
                 {
                     @object.SetActive(true);
+                    sr.sprite = null;
                 }
             }
         }

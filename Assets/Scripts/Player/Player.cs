@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     bool isDucking;
     bool tocandoBasura;
     bool cubierto;
+    Vector3 basuraPos;
 
     //StressBar
     float stressValue;
@@ -67,6 +68,7 @@ public class Player : MonoBehaviour
         isDucking = false;
         cubierto = false;
         tocandoBasura = false;
+        basuraPos = Vector3.zero;
     }
 
     // Update is called once per frame
@@ -86,7 +88,27 @@ public class Player : MonoBehaviour
         }
         else if (other.name.StartsWith("Basura"))
         {
+            basuraPos = other.gameObject.transform.position;
             tocandoBasura = true;
+        }
+        else if (other.name.StartsWith("Disparo"))
+        {
+            if (!cubierto)
+            {
+                print("!cubierto");
+                RefreshStress(10);
+            }
+            else
+            {
+                print("basuraPos: " + basuraPos);
+                print("playerPos: " + transform.position);
+                bool disparoHaciaArriba = other.gameObject.GetComponent<Rigidbody2D>().velocity.y > 0 ? true : false ;
+                if( ! ( (disparoHaciaArriba && (transform.position.z > basuraPos.z)) || (!disparoHaciaArriba && (transform.position.z < basuraPos.z)) ) )
+                {
+                    print("mal cubierto");
+                    RefreshStress(10);
+                }
+            }
         }
     }
 
@@ -245,5 +267,5 @@ public class Player : MonoBehaviour
             stressBarValue.fillAmount = stressValue / maxStressValue;
         }
     }
-
+    
 }

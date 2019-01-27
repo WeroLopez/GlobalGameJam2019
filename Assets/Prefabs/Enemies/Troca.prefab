@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5063fa990aa9d4443b68c7a5b67b48b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fuerzaDisparo: 700
   prefabBala: {fileID: 4664782246966895234, guid: 84d5a525a72c46041ba4fc6bfda50e6b,
     type: 3}
   disparaArriba: 1

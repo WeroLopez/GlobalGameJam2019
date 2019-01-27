@@ -9,7 +9,7 @@ public class Bala : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 5);
+        Destroy(gameObject, 1);
     }
 
     // Update is called once per frame
@@ -23,7 +23,6 @@ public class Bala : MonoBehaviour
         // La bala choca con el jugador
         if (other.name.StartsWith("Player"))
         {
-            print("DISPARO");
             Destroy(gameObject);
         }
     }

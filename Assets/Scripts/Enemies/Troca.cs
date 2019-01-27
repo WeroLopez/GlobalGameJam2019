@@ -9,6 +9,8 @@ public class Troca : MonoBehaviour
 
     Rigidbody2D carRigidBody;
     [SerializeField]
+    float fuerzaDisparo;
+    [SerializeField]
     Rigidbody2D prefabBala;
     [SerializeField]
     bool disparaArriba;
@@ -46,7 +48,7 @@ public class Troca : MonoBehaviour
         disparando = true;
         Rigidbody2D test;
         test = (Instantiate(prefabBala, transform.position+1.0f*transform.forward,transform.rotation));
-        test.AddRelativeForce(new Vector2(0, -400));
+        test.AddRelativeForce(new Vector2(0, -fuerzaDisparo));
         yield return new WaitForSeconds(0.1f);
         disparando = false;
     }
@@ -56,7 +58,7 @@ public class Troca : MonoBehaviour
         disparando = true;
         Rigidbody2D test;
         test = (Instantiate(prefabBala, transform.position+1.0f*transform.forward,transform.rotation));
-        test.AddRelativeForce(new Vector2(0, 400));
+        test.AddRelativeForce(new Vector2(0, fuerzaDisparo));
         yield return new WaitForSeconds(0.1f);
         disparando = false;
     }
