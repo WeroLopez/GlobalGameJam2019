@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using CoreGame.SystemControls;
 
+
+#pragma warning disable 0649
 public class Enemy : MonoBehaviour
 {
     //Enemy
@@ -22,11 +24,14 @@ public class Enemy : MonoBehaviour
     bool close = false;
     [SerializeField]
     bool attacking = false;
-
+    [SerializeField]
+    int throwrate = 10;
+    [SerializeField]
+    int throwdistance = 0;
     [SerializeField]
     Player player;
 
-    #pragma warning disable 0649
+    
 
     // Update is called once per frame
     void Start()
@@ -96,9 +101,18 @@ public class Enemy : MonoBehaviour
     {
         attacking = true;
         int r = Random.Range(0, 2);
-        transform.GetChild(r).gameObject.active = true;
+     //   int sr = Random.Range(0, throwrate);
+     /*   if(sr == 0)
+        {
+            r = 2;
+        }
+        if(r == 2 )
+        {
+
+        }*/
+        transform.GetChild(r).gameObject.SetActive(true);
         yield return new WaitForSeconds(attackTime);
-        transform.GetChild(r).gameObject.active = false;  
+        transform.GetChild(r).gameObject.SetActive(false);  
         attacking = false;
         
     }
@@ -108,6 +122,7 @@ public class Enemy : MonoBehaviour
         foreach (Transform child in transform)
             child.gameObject.SetActive(false);
     }
+ 
     public void SetCollidersStatus(bool active, string Collider)
     {
         Collider[] colliders = gameObject.GetComponentsInChildren<Collider>();
