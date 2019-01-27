@@ -177,7 +177,6 @@ public class Player : MonoBehaviour
         {
             isAttacking = false;
             playerSpriteRenderer.color = Color.white;
-            RefreshStress(2f);
             transform.GetChild(0).gameObject.SetActive(false);
             transform.GetChild(1).gameObject.SetActive(false);
         }
