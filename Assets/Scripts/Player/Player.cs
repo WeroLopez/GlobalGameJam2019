@@ -93,25 +93,6 @@ public class Player : MonoBehaviour
             basuraPos = other.gameObject.transform.position;
             tocandoBasura = true;
         }
-        else if (other.name.StartsWith("Disparo"))
-        {
-            if (!cubierto)
-            {
-                print("!cubierto");
-                RefreshStress(10);
-            }
-            else
-            {
-                print("basuraPos: " + basuraPos);
-                print("playerPos: " + transform.position);
-                bool disparoHaciaArriba = other.gameObject.GetComponent<Rigidbody2D>().velocity.y > 0 ? true : false ;
-                if( ! ( (disparoHaciaArriba && (transform.position.z > basuraPos.z)) || (!disparoHaciaArriba && (transform.position.z < basuraPos.z)) ) )
-                {
-                    print("mal cubierto");
-                    RefreshStress(10);
-                }
-            }
-        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -273,6 +254,24 @@ public class Player : MonoBehaviour
         immovilized = true;
         yield return new WaitForSeconds(1f);
         immovilized = false;
+    }
+
+
+    public void Plomazo(bool disparoHaciaArriba)
+    {
+        if (!cubierto)
+        {
+            RefreshStress(10);
+        }
+        else
+        {
+            print("basuraPos: " + basuraPos);
+            print("playerPos: " + transform.position);
+            if (!((disparoHaciaArriba && (transform.position.z > basuraPos.z)) || (!disparoHaciaArriba && (transform.position.z < basuraPos.z))))
+            {
+                RefreshStress(10);
+            }
+        }
     }
 
     public void RefreshStress(float stressChange)

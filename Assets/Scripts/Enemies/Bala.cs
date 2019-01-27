@@ -6,9 +6,13 @@ using UnityEngine;
 public class Bala : MonoBehaviour
 {
     Rigidbody2D bulletRigidBody;
+    
+    GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("Player");
         Destroy(gameObject, 1);
     }
 
@@ -23,6 +27,7 @@ public class Bala : MonoBehaviour
         // La bala choca con el jugador
         if (other.name.StartsWith("Player"))
         {
+            player.GetComponent<Player>().Plomazo(gameObject.GetComponent<Rigidbody2D>().velocity.y > 0 ? true : false);
             Destroy(gameObject);
         }
     }
