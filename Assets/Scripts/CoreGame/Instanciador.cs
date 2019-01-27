@@ -28,6 +28,8 @@ namespace CoreGame
 
             private void OnTriggerEnter2D(Collider2D other)
             {
+                print(other.name);
+                print(other.tag);
                 if (other.name.StartsWith("Instanciador"))
                 {
                     @object.SetActive(true);

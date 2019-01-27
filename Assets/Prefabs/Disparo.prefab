@@ -69,8 +69,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.8227614}
-  m_Size: {x: 0.93223053, y: 0.91391903}
+  m_Offset: {x: -0.010712392, y: 0.69271433}
+  m_Size: {x: 1.2321798, y: 1.2506742}
   m_Direction: 0
 --- !u!114 &4664782246966895244
 MonoBehaviour:
@@ -145,7 +145,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.01, y: 2.49}
+  m_Size: {x: 1.01, y: 2.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
