@@ -24,14 +24,25 @@ public class Enemy : MonoBehaviour
     //Tiempo que dura el ataque
     [SerializeField]
     float attackTime = 1f;
+    //El knockback que recibe cuando lo golpean
+    [SerializeField]
+    float knockback = 2f;
+    //Direccion del knockbak a donde se movera el enemigo, true es izquierda y false derecha
+    public bool knockbackdirection = true;
 
     //Variables que se usan para saber en que estado esta el enemigo
     [SerializeField]
     bool close = false;
     [SerializeField]
     bool attacking = false;
+    [SerializeField]
+    public bool isHurt = false;
+    [SerializeField]
+    Vector2 initialPosition;
     
     bool isJumping=false;
+
+    bool LookingLeft = true;
 
 
     Player player;
@@ -61,6 +72,7 @@ public class Enemy : MonoBehaviour
             Vector3 rot = transform.rotation.eulerAngles;
             rot = new Vector3(rot.x, OGrot.y +180, rot.z);
             transform.rotation = Quaternion.Euler(rot);
+            LookingLeft = false;
         }
         else
         {
@@ -68,9 +80,18 @@ public class Enemy : MonoBehaviour
             Vector3 rot = transform.rotation.eulerAngles;
             rot = new Vector3(rot.x, OGrot.y, rot.z);
             transform.rotation = Quaternion.Euler(rot);
+            LookingLeft = true;
         }
-        Movement();
-        Attack();
+        if (!isHurt)
+        {
+            Movement();
+            Attack();
+        }
+        else
+        {
+            Knockback(knockback);
+        }
+       
         Dead();
         
     }
@@ -109,7 +130,6 @@ public class Enemy : MonoBehaviour
                 if (dist1 < dist2)
                 {
                     transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), pos3, moveSpeed * Time.deltaTime);
-
                 }
                 else
                 {
@@ -169,9 +189,13 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Si el trigger entra, le hace daño al jugador
-        if(collision.name == "Player")
+        if(collision.name == "Player" && attacking)
         {
             player.RefreshStress(damage);
+            collision.gameObject.GetComponent<Player>().isHurt = true;
+            collision.gameObject.GetComponent<Player>().setInitialKnockback();
+            collision.gameObject.GetComponent<Player>().knockbackdirection = LookingLeft;
+            activateHitbox(0, false, true);
         }
     }
 
@@ -179,6 +203,43 @@ public class Enemy : MonoBehaviour
     {
         if(hitpoints < 0) { 
         this.gameObject.SetActive(false);
+        }
+    }
+
+    public void Knockback(float knockback)
+    {
+        float newknockback;
+            print("Knockback direction "+knockbackdirection);
+            if (knockbackdirection)
+            {
+                newknockback = -knockback;
+            }
+            else
+            {
+                newknockback = knockback;
+            }
+        Vector2 newPos = new Vector2(initialPosition.x + newknockback, initialPosition.y);
+        transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), newPos, moveSpeed * Time.deltaTime);
+        float dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(newPos.x, newPos.y));
+        if (dist == 0)
+        {
+            isHurt = false;
+        }
+    }
+    public void setInitialKnockback()
+    {
+        initialPosition = new Vector2(transform.position.x, transform.position.y);
+    }
+    void activateHitbox(int index, bool activate, bool all)
+    {
+        if (all)
+        {
+            transform.GetChild(0).gameObject.SetActive(activate);
+            transform.GetChild(1).gameObject.SetActive(activate);
+        }
+        else
+        {
+            transform.GetChild(index).gameObject.SetActive(activate);
         }
     }
 

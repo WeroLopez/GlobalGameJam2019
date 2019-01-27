@@ -52,13 +52,30 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     bool isAttacking = false;
+    [SerializeField]
+    float attackTime = 1f;
+    [SerializeField]
+    float hurtTime = 1f;
+
+    [SerializeField]
+    public bool isHurt = false;
 
     //Hitbox for hits
     [SerializeField]
     Vector2 hitbox1 = new Vector2(1.0f, 1.5f);
     [SerializeField]
     Vector2 hitbox2 = new Vector2(1.0f, -.25f);
+    //Knockback and InitialPosition for knockback
+    [SerializeField]
+    float knockbackTotal = 3f;
+    [SerializeField]
+    float knockback = .1f;
+    [SerializeField]
+    Vector2 initialPosition;
+    bool invulnerable = false;
 
+    //Direccion del knockbak a donde se movera el enemigo, true es izquierda y false derecha
+    public bool knockbackdirection = true;
 
     // Start is called before the first frame update
     void Start()
@@ -91,10 +108,19 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        Jump();
-        Attack();
-        Duck();
+        if (!isHurt)
+        {
+            Move();
+            Jump();
+            Attack();
+            Duck();
+        }
+        else
+        {
+            // Knockback(knockback,knockbackTotal);
+            //  stressValue = initialStress;
+            StartCoroutine(waitHurt());
+        }
         //Cambia posicion de hitbox de ataque
         if (playerSpriteRenderer.flipX)
         {
@@ -370,6 +396,7 @@ public class Player : MonoBehaviour
 
     public void RefreshStress(float stressChange)
     {
+        if (!invulnerable) { 
         stressValue += stressChange;
         if (stressValue < 0)
         {
@@ -384,6 +411,65 @@ public class Player : MonoBehaviour
         {
             stressBarValue.fillAmount = stressValue / maxStressValue;
         }
+        }
     }
-    
+    IEnumerator waitAttack()
+    {
+        isAttacking = true;
+        yield return new WaitForSeconds(attackTime);
+        isAttacking = false;
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(1).gameObject.SetActive(false);
+
+    }
+    //Activa los hitboxs, el index es el numero de hijo a activar/desactivar, el activate es si se activa o desactiva y el all es si es a todos
+    void activateHitbox(int index, bool activate, bool all)
+    {
+        if (all)
+        {
+            transform.GetChild(0).gameObject.SetActive(activate);
+            transform.GetChild(1).gameObject.SetActive(activate);
+        }
+        else
+        {
+            transform.GetChild(index).gameObject.SetActive(activate);
+        }
+    }
+    public void Knockback(float knockback, float knockbackTotal)
+    {
+        float newknockback;
+        if (knockbackdirection)
+        {
+            newknockback = -knockbackTotal;
+        }
+        else
+        {
+            newknockback = knockbackTotal;
+        }
+        Vector2 newPos = new Vector2(initialPosition.x + newknockback, initialPosition.y);
+        //transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), newPos, moveSpeed * Time.deltaTime);
+        playerRigidBody.velocity = new Vector3(transform.position.x + knockback, 0, 0) * moveSpeed * Time.deltaTime;
+        float dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(newPos.x, newPos.y));
+        if (dist < 1)
+        {
+            isHurt = false;
+            playerRigidBody.velocity = Vector3.zero;
+        }
+    }
+    public void setInitialKnockback()
+    {
+        initialPosition = new Vector2(transform.position.x, transform.position.y);
+    }
+
+    IEnumerator waitHurt()
+    {
+        footCollider.enabled = false;
+        invulnerable = true;
+        yield return new WaitForSeconds(hurtTime);
+        footCollider.enabled = true;
+        invulnerable = false;
+        isHurt = false;
+    }
 }
+
+
