@@ -48,11 +48,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     Transform triggerCamara;
 
+    [SerializeField]
+    bool isAttacking = false;
+
     //Hitbox for hits
     [SerializeField]
     Vector2 hitbox1 = new Vector2(1.0f, 1.5f);
     [SerializeField]
     Vector2 hitbox2 = new Vector2(1.0f, -.25f);
+
 
     // Start is called before the first frame update
     void Start()
@@ -158,12 +162,24 @@ public class Player : MonoBehaviour
         //Ataque B
         if (Controllers.GetFire(2, 1))
         {
+            isAttacking = true;
             playerSpriteRenderer.color = Color.red;
+            if (isDucking)
+            {
+                transform.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                transform.GetChild(0).gameObject.SetActive(true);
+            }
         }
         if (Controllers.GetFire(2, 2))
         {
+            isAttacking = false;
             playerSpriteRenderer.color = Color.white;
             RefreshStress(2f);
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(false);
         }
     }
 
