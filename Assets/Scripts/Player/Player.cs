@@ -43,6 +43,8 @@ public class Player : MonoBehaviour
     //Camara
     Camera camara;
     float camY;
+    float limiteInferior;
+    float limiteSuperior;
     bool tocandoLimite;
     bool immovilized;
     [SerializeField]
@@ -81,6 +83,8 @@ public class Player : MonoBehaviour
         tocandoBasura = false;
         immovilized = false;
         basuraPos = Vector3.zero;
+        limiteInferior = -4.0f;
+        limiteSuperior = 2.4f;
         //jumpInitialY = transform.position.y;
     }
 
@@ -244,7 +248,14 @@ public class Player : MonoBehaviour
             //No moverse hacia atras cuando toca el limite
             if (tocandoLimite && leftJoystick.x < 0)
             {
-                playerRigidBody.velocity = new Vector2(0, leftJoystick.y) * moveSpeed;
+                if ((transform.position.y > limiteInferior || leftJoystick.y > 0) && (transform.position.y < limiteSuperior || leftJoystick.y < 0))
+                {
+                    playerRigidBody.velocity = new Vector2(0, leftJoystick.y) * moveSpeed;
+                }
+                else
+                {
+                    playerRigidBody.velocity = new Vector2(0, 0);
+                }
             }
             //Moverse hacia enfrente si toca el limite
             else if (tocandoLimite && leftJoystick.x > 0)
@@ -255,7 +266,14 @@ public class Player : MonoBehaviour
             //Moverse
             else
             {
-                playerRigidBody.velocity = new Vector2(leftJoystick.x, leftJoystick.y) * moveSpeed;
+                if ((transform.position.y > limiteInferior || leftJoystick.y > 0) && (transform.position.y < limiteSuperior || leftJoystick.y < 0))
+                {
+                    playerRigidBody.velocity = new Vector2(leftJoystick.x, leftJoystick.y) * moveSpeed;
+                }
+                else
+                {
+                    playerRigidBody.velocity = new Vector2(leftJoystick.x, 0) * moveSpeed;
+                }
             }
             if (leftJoystick.x > 0)
             {
