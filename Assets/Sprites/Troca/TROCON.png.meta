@@ -1,15 +1,11 @@
 fileFormatVersion: 2
-guid: e2e5f894a5e570647a1ea9f503b4e159
+guid: aa8e1c42c26e2cf4b854a43e608d879a
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Cholo_0
-    21300002: Cholo_1
-    21300004: Cholo_2
-    21300006: Cholo_3
-    21300008: Cholo_4
-    21300010: Cholo_5
-    21300012: Cholo_6
-    21300014: Cholo_7
+    21300000: TROCON_0
+    21300002: TROCON_1
+    21300004: TROCON_2
+    21300006: TROCON_3
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -92,161 +88,81 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Cholo_0
+      name: TROCON_0
       rect:
         serializedVersion: 2
-        x: 122
-        y: 111
-        width: 424
-        height: 555
+        x: 103
+        y: 195
+        width: 648
+        height: 371
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6fec90beaf547ee4198e9170511f0077
+      spriteID: 266d0ebc438c51d4992ac2b6c30bcc91
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cholo_1
+      name: TROCON_1
       rect:
         serializedVersion: 2
-        x: 561
-        y: 112
-        width: 444
-        height: 538
+        x: 866
+        y: 195
+        width: 649
+        height: 374
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed238cd4283e9734aa4f654d965721d9
+      spriteID: 51219bb5f366b3648b3603214eab881e
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cholo_2
+      name: TROCON_2
       rect:
         serializedVersion: 2
-        x: 1033
-        y: 109
-        width: 548
-        height: 541
+        x: 1573
+        y: 195
+        width: 649
+        height: 253
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ecf38ab6b6dcf9479adccd8ec836541
+      spriteID: d823bfbbcaf92fd4f88a7a24e2e4a1ed
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cholo_3
+      name: TROCON_3
       rect:
         serializedVersion: 2
-        x: 1618
-        y: 97
-        width: 501
-        height: 559
+        x: 2264
+        y: 199
+        width: 649
+        height: 249
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9ab01e3d1029614b8e4867b28ad0815
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cholo_4
-      rect:
-        serializedVersion: 2
-        x: 2162
-        y: 109
-        width: 394
-        height: 547
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2284bb3dbdec33b4fa13715b249bd725
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cholo_5
-      rect:
-        serializedVersion: 2
-        x: 2648
-        y: 102
-        width: 517
-        height: 557
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 43d75d7d3d002e54586426e262b64840
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cholo_6
-      rect:
-        serializedVersion: 2
-        x: 3250
-        y: 84
-        width: 513
-        height: 566
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 17fa58ef7efed2f4ca7ef5bf91ae5ca4
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cholo_7
-      rect:
-        serializedVersion: 2
-        x: 3879
-        y: 93
-        width: 558
-        height: 566
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 64db95b581f95bb45a9833ff3a90a7aa
+      spriteID: 60d08864d2543874a8a99e1dc689080e
       vertices: []
       indices: 
       edges: []
@@ -254,7 +170,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: dc7dc4163d67dfb4e8a54e0ba34e04b5
+    spriteID: 455529e2885740d4ea05eb09c34a6430
     vertices: []
     indices: 
     edges: []
