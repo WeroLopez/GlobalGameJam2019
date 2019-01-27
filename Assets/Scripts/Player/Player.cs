@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     BoxCollider2D footCollider;
     Animator playerAnimator;
 
+    bool muerto;
+
     //Move
     Vector2 leftJoystick;
     [SerializeField]
@@ -103,6 +105,7 @@ public class Player : MonoBehaviour
         limiteInferior = -4.0f;
         limiteSuperior = 2.4f;
         //jumpInitialY = transform.position.y;
+        muerto = false;
     }
 
     // Update is called once per frame
@@ -190,6 +193,7 @@ public class Player : MonoBehaviour
         //Ataque B
         if (Controllers.GetFire(2, 1))
         {
+            playerAnimator.SetTrigger("Punch");
             isAttacking = true;
             playerSpriteRenderer.color = Color.red;
             if (isDucking)
@@ -217,6 +221,7 @@ public class Player : MonoBehaviour
         {
             if (Controllers.GetFire(1, 2) && !immovilized)
             {
+                playerAnimator.SetTrigger("Jump");
                 isJumping = true;
                 footCollider.enabled = false;
                 jumpTime = 0;
@@ -242,6 +247,7 @@ public class Player : MonoBehaviour
         {
             if (!immovilized)
             {
+                playerAnimator.SetBool("Duck", true);
                 playerSpriteRenderer.color = Color.blue;
                 isDucking = true;
                 if (tocandoBasura)
@@ -254,6 +260,7 @@ public class Player : MonoBehaviour
         {
             if (!immovilized)
             {
+                playerAnimator.SetBool("Duck", false);
                 playerSpriteRenderer.color = Color.white;
                 isDucking = false;
                 cubierto = false;
@@ -264,7 +271,7 @@ public class Player : MonoBehaviour
     private void Move()
     {
         //Si no esta saltando o atorado en el chicle, moverse
-        if (!isJumping && !isDucking && !immovilized)
+        if (!isJumping && !isDucking && !immovilized && !muerto)
         {
             leftJoystick = Controllers.GetJoystick(1, 1);
             playerAnimator.SetFloat("Velocity", Mathf.Abs(leftJoystick.x) + Mathf.Abs(leftJoystick.y));
@@ -362,6 +369,7 @@ public class Player : MonoBehaviour
     IEnumerator StuckOnGum()
     {
         // El personaje se atora en el chicle 1s.
+        playerAnimator.SetTrigger("Chicle");
         immovilized = true;
         yield return new WaitForSeconds(1f);
         immovilized = false;
@@ -371,6 +379,7 @@ public class Player : MonoBehaviour
     IEnumerator AfraidOfDog()
     {
         // Sale el perro de la casa inmovilizando al personaje 2s.
+        playerAnimator.SetTrigger("Scared");
         immovilized = true;
         yield return new WaitForSeconds(2f);
         immovilized = false;
@@ -382,6 +391,7 @@ public class Player : MonoBehaviour
         if (!cubierto)
         {
             RefreshStress(10);
+            playerAnimator.SetTrigger("Hit");
         }
         else
         {
@@ -390,6 +400,7 @@ public class Player : MonoBehaviour
             if (!((disparoHaciaArriba && (transform.position.z > basuraPos.z)) || (!disparoHaciaArriba && (transform.position.z < basuraPos.z))))
             {
                 RefreshStress(10);
+                playerAnimator.SetTrigger("Hit");
             }
         }
     }
@@ -397,20 +408,22 @@ public class Player : MonoBehaviour
     public void RefreshStress(float stressChange)
     {
         if (!invulnerable) { 
-        stressValue += stressChange;
-        if (stressValue < 0)
-        {
-            stressValue = 0;
-        }
+            stressValue += stressChange;
+            if (stressValue < 0)
+            {
+                stressValue = 0;
+            }
         
-        if (stressValue >= maxStressValue)
-        {
-            print("Perdiste");
-        }
-        else
-        {
-            stressBarValue.fillAmount = stressValue / maxStressValue;
-        }
+            if (stressValue >= maxStressValue)
+            {
+                print("Perdiste");
+                muerto = true;
+                playerAnimator.SetTrigger("Death");
+            }
+            else
+            {
+                stressBarValue.fillAmount = stressValue / maxStressValue;
+            }
         }
     }
     IEnumerator waitAttack()
@@ -465,6 +478,7 @@ public class Player : MonoBehaviour
     {
         footCollider.enabled = false;
         invulnerable = true;
+        playerAnimator.SetTrigger("Hit");
         yield return new WaitForSeconds(hurtTime);
         footCollider.enabled = true;
         invulnerable = false;
