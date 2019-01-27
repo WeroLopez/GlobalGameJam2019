@@ -7,6 +7,7 @@ public class Carro : MonoBehaviour
 {
     // Carro
 
+    SpriteRenderer carSprite;
     Rigidbody2D carRigidBody;
     [SerializeField]
     Rigidbody2D prefabBala;
@@ -22,6 +23,7 @@ public class Carro : MonoBehaviour
     void Start()
     {
         carRigidBody = GetComponent<Rigidbody2D>();
+        carSprite = GetComponent<SpriteRenderer>();
         
         // El carro se mueve a la izquierda
         if (derechaAIzquierda)
@@ -32,6 +34,7 @@ public class Carro : MonoBehaviour
         else
         {
             carRigidBody.velocity = new Vector2(moveSpeed, 0);
+            carSprite.flipX = true;
         }
     }
 
