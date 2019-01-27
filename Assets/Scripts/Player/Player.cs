@@ -110,6 +110,12 @@ public class Player : MonoBehaviour
                 other.GetComponent<SpriteRenderer>().color = Color.cyan;
             }
         }
+        else if (other.name.StartsWith("Oxxo"))
+        {
+            StartCoroutine(Pistear());
+            other.GetComponent<Collider2D>().enabled = false;
+            other.GetComponent<SpriteRenderer>().color = Color.green;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -266,6 +272,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    IEnumerator Pistear()
+    {
+        // El personaje se atora en el chicle 1s.
+        immovilized = true;
+        yield return new WaitForSeconds(1f);
+        immovilized = false;
+        RefreshStress(-30);
+    }
+
     IEnumerator StuckOnGum()
     {
         // El personaje se atora en el chicle 1s.
@@ -304,6 +319,10 @@ public class Player : MonoBehaviour
     public void RefreshStress(float stressChange)
     {
         stressValue += stressChange;
+        if (stressValue < 0)
+        {
+            stressValue = 0;
+        }
         
         if (stressValue >= maxStressValue)
         {
