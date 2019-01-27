@@ -145,6 +145,12 @@ public class Player : MonoBehaviour
         {
             other.gameObject.GetComponent<Enemy>().hitpoints -= 1;
         }
+        else if (other.name.StartsWith("Chicle"))
+        {
+            StartCoroutine(StuckOnGum());
+            Destroy(other.gameObject);
+            print("ATORADO EN EL CHICLE");
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -153,12 +159,7 @@ public class Player : MonoBehaviour
         {
             tocandoBasura = false;
         }
-        else if (other.name.StartsWith("Chicle"))
-        {
-            StartCoroutine(StuckOnGum());
-            Destroy(other.gameObject);
-            print("ATORADO EN EL CHICLE");
-        }
+        
     }
 
     private void Attack()
