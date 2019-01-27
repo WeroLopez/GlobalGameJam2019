@@ -246,8 +246,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   isJumping: 0
-  jumpSpeed: 1
-  jumpAmplitude: 0.25
+  jumpSpeed: 15
+  jumpAmplitude: 0.125
   jumpInitialY: -0.6984546
   maxStressValue: 100
   stressBar: {fileID: 0}

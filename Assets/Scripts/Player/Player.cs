@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
         tocandoBasura = false;
         immovilized = false;
         basuraPos = Vector3.zero;
-        jumpInitialY = transform.position.y;
+        //jumpInitialY = transform.position.y;
     }
 
     // Update is called once per frame
