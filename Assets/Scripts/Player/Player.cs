@@ -184,7 +184,11 @@ public class Player : MonoBehaviour
         }
         else if (other.name == "Final")
         {
-            SceneManager.LoadScene("Final", LoadSceneMode.Additive);
+            GameObject.Find("Pisteando").SetActive(true);
+        }
+        else if (other.name == "Carro" || other.name == "Troca")
+        {
+            StartCoroutine(TeChocaronWey());
         }
     }
 
@@ -249,7 +253,7 @@ public class Player : MonoBehaviour
     private void Duck()
     {
         //Agachar X 
-        if (Controllers.GetFire(3, 1))
+        if (Controllers.GetFire(4, 1))
         {
             if (!immovilized)
             {
@@ -261,7 +265,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        if (Controllers.GetFire(3, 2))
+        if (Controllers.GetFire(4, 2))
         {
             if (!immovilized)
             {
@@ -374,6 +378,16 @@ public class Player : MonoBehaviour
     {
         // El personaje se atora en el chicle 1s.
         playerAnimator.SetTrigger("Chicle");
+        immovilized = true;
+        yield return new WaitForSeconds(1f);
+        immovilized = false;
+        RefreshStress(10);
+    }
+
+    IEnumerator TeChocaronWey()
+    {
+        // El personaje se atora en el chicle 1s.
+        playerAnimator.SetTrigger("Hit");
         immovilized = true;
         yield return new WaitForSeconds(1f);
         immovilized = false;
