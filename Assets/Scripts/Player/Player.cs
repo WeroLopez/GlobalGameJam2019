@@ -127,20 +127,17 @@ public class Player : MonoBehaviour
             {
                 StartCoroutine(AfraidOfDog());
                 other.GetComponent<Collider2D>().enabled = false;
-                other.GetComponent<SpriteRenderer>().color = Color.red;
                 print("PERRO");
             }
             else
             {
                 other.GetComponent<Collider2D>().enabled = false;
-                other.GetComponent<SpriteRenderer>().color = Color.cyan;
             }
         }
         else if (other.name.StartsWith("Oxxo"))
         {
             StartCoroutine(Pistear());
             other.GetComponent<Collider2D>().enabled = false;
-            other.GetComponent<SpriteRenderer>().color = Color.green;
         }else if (other.name.StartsWith("Cholo"))
         {
             other.gameObject.GetComponent<Enemy>().hitpoints -= 1;
