@@ -274,7 +274,7 @@ public class Player : MonoBehaviour
 
     IEnumerator Pistear()
     {
-        // El personaje se atora en el chicle 1s.
+        // El personaje se toma una cerveza del Oxxo para bajar el estrés.
         immovilized = true;
         yield return new WaitForSeconds(1f);
         immovilized = false;
