@@ -268,16 +268,20 @@ public class Player : MonoBehaviour
 
     IEnumerator StuckOnGum()
     {
+        // El personaje se atora en el chicle 1s.
         immovilized = true;
         yield return new WaitForSeconds(1f);
         immovilized = false;
+        RefreshStress(10);
     }
 
     IEnumerator AfraidOfDog()
     {
+        // Sale el perro de la casa inmovilizando al personaje 2s.
         immovilized = true;
         yield return new WaitForSeconds(2f);
         immovilized = false;
+        RefreshStress(10);
     }
 
     public void Plomazo(bool disparoHaciaArriba)
