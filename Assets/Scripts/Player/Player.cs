@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     Camera camara;
     float camY;
     bool tocandoLimite;
+    bool immovilized;
     [SerializeField]
     Transform triggerCamara;
 
@@ -68,6 +69,7 @@ public class Player : MonoBehaviour
         isDucking = false;
         cubierto = false;
         tocandoBasura = false;
+        immovilized = false;
         basuraPos = Vector3.zero;
     }
 
@@ -118,6 +120,12 @@ public class Player : MonoBehaviour
         {
             tocandoBasura = false;
         }
+        else if (other.name.StartsWith("Chicle"))
+        {
+            StartCoroutine(StuckOnGum());
+            Destroy(other.gameObject);
+            print("ATORADO EN EL CHICLE");
+        }
     }
 
     private void Attack()
@@ -139,7 +147,7 @@ public class Player : MonoBehaviour
         //Saltar A 
         if (!isJumping)
         {
-            if (Controllers.GetFire(1, 2))
+            if (Controllers.GetFire(1, 2) && !immovilized)
             {
                 isJumping = true;
                 footCollider.enabled = false;
@@ -164,25 +172,31 @@ public class Player : MonoBehaviour
         //Agachar X 
         if (Controllers.GetFire(3, 1))
         {
-            playerSpriteRenderer.color = Color.blue;
-            isDucking = true;
-            if (tocandoBasura)
+            if (!immovilized)
             {
-                cubierto = true;
+                playerSpriteRenderer.color = Color.blue;
+                isDucking = true;
+                if (tocandoBasura)
+                {
+                    cubierto = true;
+                }
             }
         }
         if (Controllers.GetFire(3, 2))
         {
-            playerSpriteRenderer.color = Color.white;
-            isDucking = false;
-            cubierto = false;
+            if (!immovilized)
+            {
+                playerSpriteRenderer.color = Color.white;
+                isDucking = false;
+                cubierto = false;
+            }
         }
     }
 
     private void Move()
     {
-        //Si no esta saltando, moverse
-        if (!isJumping && !isDucking)
+        //Si no esta saltando o atorado en el chicle, moverse
+        if (!isJumping && !isDucking && !immovilized)
         {
             leftJoystick = Controllers.GetJoystick(1, 1);
             playerAnimator.SetFloat("Velocity", Mathf.Abs(leftJoystick.x) + Mathf.Abs(leftJoystick.y));
@@ -252,6 +266,13 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(transform.position.x, jumpInitialY, transform.position.z);
             playerSpriteRenderer.color = Color.white;
         }
+    }
+
+    IEnumerator StuckOnGum()
+    {
+        immovilized = true;
+        yield return new WaitForSeconds(1f);
+        immovilized = false;
     }
 
     public void RefreshStress(float stressChange)
