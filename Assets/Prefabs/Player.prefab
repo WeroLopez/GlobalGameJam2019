@@ -137,11 +137,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 4
+  isJumping: 0
   jumpSpeed: 15
   jumpAmplitude: 0.125
+  jumpInitialY: 0
   maxStressValue: 100
   stressBar: {fileID: 0}
   triggerCamara: {fileID: 0}
+  isAttacking: 0
+  hitbox1: {x: 1, y: 1.5}
+  hitbox2: {x: 1, y: -0.25}
 --- !u!61 &3771421698088806686
 BoxCollider2D:
   m_ObjectHideFlags: 0

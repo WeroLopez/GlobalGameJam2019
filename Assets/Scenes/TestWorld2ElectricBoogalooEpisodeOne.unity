@@ -382,6 +382,7 @@ MonoBehaviour:
   maxStressValue: 100
   stressBar: {fileID: 1517921310390606}
   triggerCamara: {fileID: 1348772373}
+  isAttacking: 0
   hitbox1: {x: 1, y: -0.5}
   hitbox2: {x: 1, y: 0}
 --- !u!50 &321878504
