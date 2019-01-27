@@ -296,13 +296,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6e839e31f3cea4bbeaeb0d2f83b068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   moveSpeed: 3
   distance: 1.5
   damage: 5
-  attackTime: 2
+  attackTime: 0.5
+  knockback: 2
+  knockbackdirection: 1
   close: 0
   attacking: 0
+  isHurt: 0
+  initialPosition: {x: 0, y: 0}
+  hitpoints: 3
 --- !u!1 &3964505545624237783
 GameObject:
   m_ObjectHideFlags: 0
