@@ -93,6 +93,23 @@ public class Player : MonoBehaviour
             basuraPos = other.gameObject.transform.position;
             tocandoBasura = true;
         }
+        
+        else if (other.name.StartsWith("CasaPerro"))
+        {
+            var numeroAleatorio = Random.Range(0f, 100.0f);
+            if (numeroAleatorio < 70)
+            {
+                StartCoroutine(AfraidOfDog());
+                other.GetComponent<Collider2D>().enabled = false;
+                other.GetComponent<SpriteRenderer>().color = Color.red;
+                print("PERRO");
+            }
+            else
+            {
+                other.GetComponent<Collider2D>().enabled = false;
+                other.GetComponent<SpriteRenderer>().color = Color.cyan;
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -256,6 +273,12 @@ public class Player : MonoBehaviour
         immovilized = false;
     }
 
+    IEnumerator AfraidOfDog()
+    {
+        immovilized = true;
+        yield return new WaitForSeconds(2f);
+        immovilized = false;
+    }
 
     public void Plomazo(bool disparoHaciaArriba)
     {
