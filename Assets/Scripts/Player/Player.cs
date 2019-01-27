@@ -48,6 +48,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     Transform triggerCamara;
 
+    //Hitbox for hits
+    [SerializeField]
+    Vector2 hitbox1 = new Vector2(1.0f, 1.5f);
+    [SerializeField]
+    Vector2 hitbox2 = new Vector2(1.0f, -.25f);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +77,7 @@ public class Player : MonoBehaviour
         tocandoBasura = false;
         immovilized = false;
         basuraPos = Vector3.zero;
+        jumpInitialY = transform.position.y;
     }
 
     // Update is called once per frame
@@ -80,6 +87,17 @@ public class Player : MonoBehaviour
         Jump();
         Attack();
         Duck();
+        //Cambia posicion de hitbox de ataque
+        if (playerSpriteRenderer.flipX)
+        {
+            transform.GetChild(0).transform.position = new Vector2(transform.position.x - hitbox1.x, transform.position.y - hitbox1.y);
+            transform.GetChild(1).transform.position = new Vector2(transform.position.x - hitbox2.x, transform.position.y - hitbox2.y);
+        }
+        else
+        {
+            transform.GetChild(0).transform.position = new Vector2(transform.position.x + hitbox1.x, transform.position.y - hitbox1.y);
+            transform.GetChild(1).transform.position = new Vector2(transform.position.x + hitbox2.x, transform.position.y - hitbox2.y);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -115,6 +133,9 @@ public class Player : MonoBehaviour
             StartCoroutine(Pistear());
             other.GetComponent<Collider2D>().enabled = false;
             other.GetComponent<SpriteRenderer>().color = Color.green;
+        }else if (other.name.StartsWith("Cholo"))
+        {
+            other.gameObject.GetComponent<Enemy>().hitpoints -= 1;
         }
     }
 
