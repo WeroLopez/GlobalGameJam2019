@@ -20,11 +20,11 @@ public class Player : MonoBehaviour
     float moveSpeed;
 
     //Jump
-    bool isJumping;
+    public bool isJumping;
     [SerializeField]
     float jumpSpeed, jumpAmplitude;
     float jumpTime;
-    float jumpInitialY;
+    public float jumpInitialY;
 
     //Agachar
     bool isDucking;
